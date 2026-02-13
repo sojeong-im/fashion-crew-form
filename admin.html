@@ -387,12 +387,11 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (Lite version for simple usage) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Firebase Config -->
-    <script src="firebase-config.js"></script>
+    <!-- Supabase Config -->
+    <script src="supabase-config.js"></script>
 
     <script>
         let currentFilter = 'all';
@@ -412,7 +411,6 @@
             const errorMessage = document.getElementById('errorMessage');
 
             if (password === ADMIN_PASSWORD) {
-                // 간단한 비밀번호 체크 (Firebase Auth 제외)
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 errorMessage.style.display = 'none';
                 showDashboard();
@@ -439,18 +437,17 @@
             loadApplications();
         }
 
-        // 지원서 데이터 로드
+        // 지원서 데이터 로드 (Supabase)
         async function loadApplications() {
             try {
-                // Firestore에서 데이터 가져오기 (Auth 없이)
-                const snapshot = await db.collection('applications')
-                    .orderBy('createdAt', 'desc')
-                    .get();
+                const { data, error } = await db
+                    .from('applications')
+                    .select('*')
+                    .order('created_at', { ascending: false });
 
-                applicationsData = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+                if (error) throw error;
+
+                applicationsData = data || [];
 
                 updateStats();
                 renderTable();
@@ -485,9 +482,7 @@
             }
 
             tbody.innerHTML = filteredData.map(app => {
-                const date = app.createdAt ?
-                    new Date(app.createdAt.toDate()).toLocaleDateString('ko-KR') :
-                    new Date(app.timestamp).toLocaleDateString('ko-KR');
+                const date = new Date(app.created_at).toLocaleDateString('ko-KR');
 
                 return `
                 <tr>
@@ -495,7 +490,7 @@
                     <td>${app.identification}</td>
                     <td>${app.contact}</td>
                     <td>${app.academic}</td>
-                    <td>${app.location.station || '미선택'}</td>
+                    <td>${app.station || '미선택'}</td>
                     <td>
                         <span class="status-badge status-${app.status}">
                             ${app.status === 'pending' ? '대기' :
@@ -517,10 +512,15 @@
             }).join('');
         }
 
-        // 상태 업데이트
+        // 상태 업데이트 (Supabase)
         window.updateStatus = async function (id, status) {
             try {
-                await db.collection('applications').doc(id).update({ status });
+                const { error } = await db
+                    .from('applications')
+                    .update({ status })
+                    .eq('id', id);
+
+                if (error) throw error;
                 await loadApplications();
             } catch (error) {
                 console.error('Error updating status:', error);

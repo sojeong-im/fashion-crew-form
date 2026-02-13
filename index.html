@@ -568,12 +568,11 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (Version 8.10.1) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Firebase Config -->
-    <script src="firebase-config.js"></script>
+    <!-- Supabase Config -->
+    <script src="supabase-config.js"></script>
 
     <script>
         // 서울 주요 지하철역 좌표 데이터 (지도 이미지 기준 퍼센트)
@@ -643,7 +642,7 @@
         const locationInfo = document.getElementById('locationInfo');
         const locationX = document.getElementById('locationX');
         const locationY = document.getElementById('locationY');
-        let selectedStation = null; // Add this line
+        let selectedStation = null;
 
         // 가장 가까운 역 찾기 함수
         function findNearestStation(xPercent, yPercent) {
@@ -684,7 +683,7 @@
 
             // 가장 가까운 역 찾기
             const nearestStation = findNearestStation(parseFloat(xPercent), parseFloat(yPercent));
-            selectedStation = nearestStation; // Add this line
+            selectedStation = nearestStation;
 
             if (nearestStation) {
                 locationInfo.innerHTML = `📍 <strong>${nearestStation.name}</strong> (${nearestStation.line}) 인근`;
@@ -708,21 +707,17 @@
                 return;
             }
 
-            // 폼 데이터 수집
+            // 폼 데이터 수집 (Supabase 테이블 컬럼에 맞춤)
             const formData = {
                 identification: document.getElementById('identification').value,
                 contact: document.getElementById('contact').value,
                 academic: document.getElementById('academic').value,
                 motivation: document.getElementById('motivation').value,
-                location: {
-                    x: locationX.value,
-                    y: locationY.value,
-                    station: selectedStation ? selectedStation.name : '미선택',
-                    line: selectedStation ? selectedStation.line : '미선택'
-                },
-                timestamp: new Date().toISOString(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                status: 'pending' // pending, approved, rejected
+                location_x: locationX.value,
+                location_y: locationY.value,
+                station: selectedStation ? selectedStation.name : '미선택',
+                line: selectedStation ? selectedStation.line : '미선택',
+                status: 'pending'
             };
 
             // 제출 버튼 비활성화
@@ -730,8 +725,12 @@
             submitBtn.textContent = '제출 중...';
 
             try {
-                // Firestore에 데이터 저장
-                await db.collection('applications').add(formData);
+                // Supabase에 데이터 저장
+                const { data, error } = await db
+                    .from('applications')
+                    .insert([formData]);
+
+                if (error) throw error;
 
                 console.log('Application submitted:', formData);
 
