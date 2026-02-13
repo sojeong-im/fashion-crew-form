@@ -1,22 +1,21 @@
 // Firebase Configuration
-// Project: smwhg7
+// Project: fashion-crew-form
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDKVKTxpYeogUBm51E5B7h9jD2auBAJfMg",
-    authDomain: "smwhg7.firebaseapp.com",
-    projectId: "smwhg7",
-    storageBucket: "smwhg7.firebasestorage.app",
-    messagingSenderId: "539761228990",
-    appId: "1:539761228990:web:ec5e7c29b36493d28132ef",
-    measurementId: "G-JG201GG6BQ"
+    apiKey: "AIzaSyDJf2no17murmqBQwsQTPka0CVaec3Zrdw",
+    authDomain: "fashion-crew-form.firebaseapp.com",
+    projectId: "fashion-crew-form",
+    storageBucket: "fashion-crew-form.firebasestorage.app",
+    messagingSenderId: "305126388776",
+    appId: "1:305126388776:web:4a4fdad52e39394d2ff11d",
+    measurementId: "G-1TG4J16RVD"
 };
 
 // Firebase 초기화
 firebase.initializeApp(firebaseConfig);
 
-// Firestore 및 Auth 인스턴스
+// Firestore 인스턴스
 const db = firebase.firestore();
-// const auth = firebase.auth(); // Auth 사용 안함
 
 // 컬렉션 이름
 const APPLICATIONS_COLLECTION = 'applications';
