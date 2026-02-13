@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(느)좋되고싶어? - Fashion Crew 7기 모집</title>
+    <meta name="description" content="센스 없어도 됨. 들어오면 우리가 다 바꿔줌. 느좋 멤버 7기 모집 중">
+    <style>
+        /* 폰트 및 기본 스타일 */
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+        :root {
+            --point-color: #00FF41;
+            /* 형광 그린 */
+            --bg-dark: #0A0A0A;
+            --card-bg: #141414;
+            --input-bg: #1F1F1F;
+            --text-main: #FFFFFF;
+            --text-dim: #A0A0A0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Pretendard', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* 히어로 섹션 */
+        .hero-section {
+            width: 100%;
+            min-height: 60vh;
+            background: linear-gradient(to bottom, #0A0A0A 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('hero.jpg') center/cover no-repeat;
+            opacity: 0.3;
+            filter: brightness(0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--point-color);
+            color: black;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 0 0 20px 0;
+            letter-spacing: -3px;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--point-color);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        /* 컨테이너 */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 헤더 디자인 */
+        .header {
+            text-align: left;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .header .accent {
+            color: var(--point-color);
+            display: block;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        /* 소개 섹션 */
+        .intro-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid #222;
+        }
+
+        .intro-card h3 {
+            margin-top: 0;
+            color: var(--point-color);
+            font-size: 1.1rem;
+        }
+
+        .intro-card p {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-bottom: 0;
+        }
+
+        /* 예시 갤러리 */
+        .examples-section {
+            margin-bottom: 50px;
+        }
+
+        .examples-section h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--point-color);
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .example-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .example-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .example-card:hover .example-overlay {
+            transform: translateY(0);
+        }
+
+        .example-text {
+            font-size: 0.8rem;
+            color: var(--point-color);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* 폼 요소 스타일 */
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        input,
+        textarea {
+            background: var(--input-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 16px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Pretendard', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--point-color);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #666;
+        }
+
+        /* 지도 섹션 */
+        .map-container {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #333;
+            cursor: crosshair;
+            background: #111;
+        }
+
+        .map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(1) brightness(0.5);
+            transition: filter 0.5s;
+        }
+
+        .map-container:hover img {
+            filter: grayscale(0.8) brightness(0.7);
+        }
+
+        .pin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--point-color);
+            border: 3px solid white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            box-shadow: 0 0 20px var(--point-color);
+            z-index: 5;
+            pointer-events: none;
+            animation: pinDrop 0.5s ease-out;
+        }
+
+        @keyframes pinDrop {
+            0% {
+                transform: translate(-50%, -100%) scale(0);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .location-info {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--point-color);
+            text-align: center;
+            min-height: 20px;
+        }
+
+
+
+        /* 제출 버튼 */
+        .submit-btn {
+            background: var(--point-color);
+            color: black;
+            border: none;
+            padding: 20px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 성공 메시지 */
+        .success-message {
+            display: none;
+            background: var(--card-bg);
+            border: 2px solid var(--point-color);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-message h3 {
+            color: var(--point-color);
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-section {
+                min-height: 50vh;
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">7기 모집 중</div>
+            <h1 class="hero-title">(느)좋되고<br>싶어?</h1>
+            <p class="hero-subtitle">야, 너네 그러다 진짜 루저돼 🤫</p>
+        </div>
+        <div class="scroll-indicator">Scroll Down ↓</div>
+    </section>
+
+    <div class="container">
+        <header class="header">
+            <span class="accent">FASHION CREW</span>
+            <h1>변신의<br>시작</h1>
+        </header>
+
+        <section class="intro-card">
+            <h3>우리가 다 바꿨어 💯</h3>
+            <p>기본템부터 나만의 추구미까지. 센스 없어도 됨. 들어오면 우리가 다 바꿔줌. 일단 지원하고 같이 '느좋' 돼보자.</p>
+        </section>
+
+        <!-- 예시 갤러리 -->
+        <section class="examples-section">
+            <h2>🔥 실제 변신 사례</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <img src="example1.jpg" alt="스타일 변신 예시 1" loading="lazy">
+                    <div class="example-overlay">
+                        <div class="example-text">BEFORE → AFTER</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <img src="example2.jpg" alt="스타일 변신 예시 2" loading="lazy">
+                    <div class="example-overlay">
+                        <div class="example-text">BEFORE → AFTER</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <img src="example3.jpg" alt="스타일 변신 예시 3" loading="lazy">
+                    <div class="example-overlay">
+                        <div class="example-text">BEFORE → AFTER</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <img src="example4.jpg" alt="스타일 변신 예시 4" loading="lazy">
+                    <div class="example-overlay">
+                        <div class="example-text">BEFORE → AFTER</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <img src="example5.jpg" alt="스타일 변신 예시 5" loading="lazy">
+                    <div class="example-overlay">
+                        <div class="example-text">BEFORE → AFTER</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <form id="applyForm" class="form-section">
+            <div class="field-group">
+                <label>Identification</label>
+                <input type="text" id="identification" placeholder="이름 / 나이 / 성별" required>
+            </div>
+
+            <div class="field-group">
+                <label>Contact</label>
+                <input type="tel" id="contact" placeholder="010-0000-0000" required>
+            </div>
+
+            <div class="field-group">
+                <label>Academic</label>
+                <input type="text" id="academic" placeholder="대학교 / 전공 / 학년" required>
+            </div>
+
+            <div class="field-group">
+                <label>Motivation</label>
+                <textarea id="motivation" rows="4" placeholder="왜 느좋 멤버가 되고 싶은지 짧고 굵게." required></textarea>
+            </div>
+
+            <div class="field-group">
+                <label>📍 Where You Live (Click the Map)</label>
+                <div class="map-container" id="mapWrapper">
+                    <img src="map.png" alt="서울 지도" id="mapImage">
+                    <div class="pin" id="pin"></div>
+                </div>
+                <input type="hidden" id="locationX" name="locationX">
+                <input type="hidden" id="locationY" name="locationY">
+                <div class="location-info" id="locationInfo"></div>
+            </div>
+
+
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                ✨ 느좋 멤버 지원하기
+            </button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            <h3>🎉 지원 완료!</h3>
+            <p>당신의 변신 스토리가 곧 시작됩니다.<br>빠른 시일 내에 연락드리겠습니다.</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Version 8.10.1) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // 서울 주요 지하철역 좌표 데이터 (지도 이미지 기준 퍼센트)
+        const stations = [
+            // 강남권
+            { name: '강남역', x: 62, y: 72, line: '2호선' },
+            { name: '역삼역', x: 65, y: 68, line: '2호선' },
+            { name: '선릉역', x: 68, y: 65, line: '2호선' },
+            { name: '삼성역', x: 72, y: 62, line: '2호선' },
+            { name: '잠실역', x: 78, y: 58, line: '2,8호선' },
+            { name: '신논현역', x: 60, y: 74, line: '9호선' },
+            { name: '논현역', x: 58, y: 70, line: '7호선' },
+            { name: '압구정역', x: 65, y: 58, line: '3호선' },
+            { name: '신사역', x: 58, y: 64, line: '3호선' },
+            { name: '선정릉역', x: 70, y: 70, line: '9호선' },
+
+            // 홍대/신촌/이대
+            { name: '홍대입구역', x: 32, y: 52, line: '2호선' },
+            { name: '신촌역', x: 35, y: 50, line: '2호선' },
+            { name: '이대역', x: 38, y: 52, line: '2호선' },
+            { name: '합정역', x: 30, y: 55, line: '2,6호선' },
+            { name: '상수역', x: 34, y: 58, line: '6호선' },
+
+            // 강북/종로/명동
+            { name: '종각역', x: 52, y: 48, line: '1호선' },
+            { name: '종로3가역', x: 54, y: 46, line: '1,3,5호선' },
+            { name: '명동역', x: 50, y: 52, line: '4호선' },
+            { name: '시청역', x: 48, y: 50, line: '1,2호선' },
+            { name: '을지로입구역', x: 52, y: 50, line: '2호선' },
+            { name: '동대문역', x: 58, y: 48, line: '1,4호선' },
+            { name: '광화문역', x: 48, y: 46, line: '5호선' },
+
+            // 건대/성수
+            { name: '건대입구역', x: 70, y: 52, line: '2,7호선' },
+            { name: '성수역', x: 68, y: 48, line: '2호선' },
+            { name: '뚝섬역', x: 64, y: 52, line: '2호선' },
+
+            // 여의도/영등포
+            { name: '여의도역', x: 38, y: 62, line: '5,9호선' },
+            { name: '영등포구청역', x: 35, y: 68, line: '2,5호선' },
+            { name: '신길역', x: 38, y: 72, line: '1,5호선' },
+
+            // 신림/사당
+            { name: '사당역', x: 48, y: 78, line: '2,4호선' },
+            { name: '신림역', x: 45, y: 82, line: '2호선' },
+            { name: '서울대입구역', x: 46, y: 75, line: '2호선' },
+
+            // 성북/노원
+            { name: '성신여대입구역', x: 55, y: 35, line: '4호선' },
+            { name: '한성대입구역', x: 52, y: 38, line: '4호선' },
+            { name: '혜화역', x: 54, y: 42, line: '4호선' },
+            { name: '노원역', x: 62, y: 22, line: '4,7호선' },
+
+            // 기타 주요역
+            { name: '서울역', x: 45, y: 52, line: 'KTX,1,4호선' },
+            { name: '고속터미널역', x: 50, y: 68, line: '3,7,9호선' },
+            { name: '교대역', x: 52, y: 72, line: '2,3호선' },
+            { name: '이태원역', x: 52, y: 58, line: '6호선' },
+            { name: '한남역', x: 58, y: 58, line: '중앙선' },
+            { name: '왕십리역', x: 62, y: 48, line: '2,5호선' },
+        ];
+
+        // 지도 클릭 이벤트
+        const mapWrapper = document.getElementById('mapWrapper');
+        const mapImage = document.getElementById('mapImage');
+        const pin = document.getElementById('pin');
+        const locationInfo = document.getElementById('locationInfo');
+        const locationX = document.getElementById('locationX');
+        const locationY = document.getElementById('locationY');
+        let selectedStation = null; // Add this line
+
+        // 가장 가까운 역 찾기 함수
+        function findNearestStation(xPercent, yPercent) {
+            let minDistance = Infinity;
+            let nearestStation = null;
+
+            stations.forEach(station => {
+                const distance = Math.sqrt(
+                    Math.pow(station.x - xPercent, 2) +
+                    Math.pow(station.y - yPercent, 2)
+                );
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestStation = station;
+                }
+            });
+
+            return nearestStation;
+        }
+
+        mapWrapper.addEventListener('click', function (e) {
+            const rect = mapImage.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // 핀 위치 설정
+            pin.style.left = x + 'px';
+            pin.style.top = y + 'px';
+            pin.style.display = 'block';
+
+            // 좌표 저장 (비율로 저장)
+            const xPercent = (x / rect.width * 100).toFixed(2);
+            const yPercent = (y / rect.height * 100).toFixed(2);
+
+            locationX.value = xPercent;
+            locationY.value = yPercent;
+
+            // 가장 가까운 역 찾기
+            const nearestStation = findNearestStation(parseFloat(xPercent), parseFloat(yPercent));
+            selectedStation = nearestStation; // Add this line
+
+            if (nearestStation) {
+                locationInfo.innerHTML = `📍 <strong>${nearestStation.name}</strong> (${nearestStation.line}) 인근`;
+            } else {
+                locationInfo.textContent = '📍 위치가 선택되었습니다';
+            }
+        });
+
+        // 폼 제출 이벤트
+        const form = document.getElementById('applyForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // 위치 선택 확인
+            if (!locationX.value || !locationY.value) {
+                alert('지도에서 거주 지역을 선택해주세요!');
+                mapWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            // 폼 데이터 수집
+            const formData = {
+                identification: document.getElementById('identification').value,
+                contact: document.getElementById('contact').value,
+                academic: document.getElementById('academic').value,
+                motivation: document.getElementById('motivation').value,
+                location: {
+                    x: locationX.value,
+                    y: locationY.value,
+                    station: selectedStation ? selectedStation.name : '미선택',
+                    line: selectedStation ? selectedStation.line : '미선택'
+                },
+                timestamp: new Date().toISOString(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                status: 'pending' // pending, approved, rejected
+            };
+
+            // 제출 버튼 비활성화
+            submitBtn.disabled = true;
+            submitBtn.textContent = '제출 중...';
+
+            try {
+                // Firestore에 데이터 저장
+                await db.collection('applications').add(formData);
+
+                console.log('Application submitted:', formData);
+
+                // 폼 숨김
+                form.style.display = 'none';
+
+                // 성공 메시지 표시
+                successMessage.classList.add('show');
+
+                // 성공 메시지로 스크롤
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } catch (error) {
+                console.error('Error submitting application:', error);
+                alert('지원서 제출 중 오류가 발생했습니다: ' + error.message);
+
+                // 버튼 다시 활성화
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✨ 느좋 멤버 지원하기';
+            }
+        });
+
+        // 스크롤 인디케이터 클릭
+        document.querySelector('.scroll-indicator').addEventListener('click', function () {
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+
+</body>
+
+</html>
